@@ -1,0 +1,72 @@
+{% extends 'getpid_app/components/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h3>แฟ้ม Person </h3>
+        </div>
+    </div>
+
+    <div id="form" class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pid" class="form-label">เลขบัตร ปชช. 13 หลัก</label>
+                <input type="tel" name="cid" class="form-control" placeholder="CID">
+            </div>
+            <div class="mb-3">
+                <label for="hcode" class="form-label">รหัสหน่วยบริการ 5 หลัก</label>
+                <input type="tel" name="hoscode" class="form-control" placeholder="HCODE">
+            </div>
+            <button type="submit" class="btn btn-primary"
+                    style="background-color: #0A7956FF; border: 1px solid #209470">ค้นหา
+            </button>
+        </form>
+    </div>
+
+    <div>
+        {% for item in my_list %}
+            <div class="row">
+                <p>ข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}</p>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-3">
+                    <label for="pid" class="form-label">pid: </label>
+                    {#                    <input onclick="clickApp({{ item.pid }})" type="text" id="{{ item.pid }}" name="pid"#}
+                    <input type="text" id="id{{ item.pid }}" name="pid"
+                           class="form-control pid copy"
+                           data-clipboard-action="copy" data-clipboard-target="#id{{ item.pid }}"
+                           value="{{ item.pid }}">
+                </div>
+                <div class="mb-3 col-md-3">
+                    <label for="typearea" class="form-label">typearea: </label>
+                    <input type="text" name="typearea" class="form-control" disabled value="{{ item.typearea }}">
+                </div>
+            </div>
+
+
+        {% endfor %}
+    </div>
+    <script>
+        var clipboard = new ClipboardJS('.copy');
+
+        clipboard.on('success', function (e) {
+            let copy_text = e.text
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+
+            e.clearSelection();
+
+            alertify.set('notifier', 'position', 'top-right');
+            alertify.success(copy_text + ' คัดลอกแล้ว!');
+
+        });
+
+        clipboard.on('error', function (e) {
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+        });
+
+    </script>
+{% endblock %}

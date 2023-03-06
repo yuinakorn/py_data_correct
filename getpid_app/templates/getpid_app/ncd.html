@@ -1,0 +1,346 @@
+{% extends 'getpid_app/components/base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h3>NCD (แฟ้ม Chronic, Diagnosis_opd, Diagnosis_ipd)</h3>
+        </div>
+    </div>
+    <div id="form" class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pid" class="form-label">เลขบัตร ปชช. 13 หลัก</label>
+                <input type="tel" name="cid" class="form-control" placeholder="CID">
+            </div>
+            <button type="submit" class="btn btn-primary"
+                    style="background-color: #0A7956FF; border: 1px solid #209470">ค้นหา
+            </button>
+        </form>
+    </div>
+    {% if show is True %}
+        <div class="alert alert-success" role="alert">
+            ข้อมูลของเลขบัตรประชาชน <b>{{ cid }}</b>
+        </div>
+    {% endif %}
+
+    {% if color == 'red' %}
+        <div class="alert alert-danger" role="alert">
+            ไม่พบข้อมูลของเลขบัตรประชาชน <b>{{ cid }}</b>
+        </div>
+    {% endif %}
+
+    {% if show is True %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-home"
+                                type="button" role="tab" aria-controls="nav-home" aria-selected="true">ทะเบียน Chronic
+                        </button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">ความดัน
+                        </button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                                type="button" role="tab" aria-controls="nav-contact" aria-selected="false">เบาหวาน
+                        </button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                         aria-labelledby="nav-home-tab">
+                        <div class="row pt-4">
+                            <div class="col-md-9">
+                                {% if chronic %}
+                                    <h3>แฟ้ม Chronic</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>pid</th>
+                                            <th>chronic</th>
+                                            <th>date_diag</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in chronic %}
+                                            <tr>
+                                                <td>{{ item.pid }}</td>
+                                                <td>{{ item.chronic }}</td>
+                                                <td>{{ item.date_diag }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <h3>แฟ้ม Chronic</h3>
+                                    <ul>
+                                        <li>ไม่พบข้อมูล</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                {% if chronic %}
+
+                                    <h3>&nbsp;</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>hoscode</th>
+                                            <th>hosname</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in chronic %}
+                                            <tr>
+                                                <td>{{ item.hospcode }}</td>
+                                                <td>{{ item.hosname }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {#    tab2 #}
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="row pt-4">
+                            <div class="col-md-9">
+                                {% if diagnosis_opd_i10 %}
+                                    <h3>แฟ้ม Diagnosis_opd ผู้ป่วยนอกโรคความดัน</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>pid</th>
+                                            <th>seq</th>
+                                            <th>diagcode</th>
+                                            <th>date_serv</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_opd_i10 %}
+                                            <tr>
+                                                <td>{{ item.pid }}</td>
+                                                <td>{{ item.seq }}</td>
+                                                <td>{{ item.diagcode }}</td>
+                                                <td>{{ item.date_serv }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <h3>แฟ้ม Diagnosis_opd ผู้ป่วยนอกโรคความดัน </h3>
+                                    <ul>
+                                        <li>ไม่พบข้อมูล</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                {% if diagnosis_opd_i10 %}
+
+                                    <h3>&nbsp;</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>hoscode</th>
+                                            <th>hosname</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_opd_i10 %}
+                                            <tr>
+                                                <td>{{ item.hospcode }}</td>
+                                                <td>{{ item.hosname }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row pt-4">
+                            <div class="col-md-9">
+                                {% if diagnosis_ipd_i10 %}
+                                    <h3>แฟ้ม Diagnosis_ipd ผู้ป่วยในโรคความดัน </h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>pid</th>
+                                            <th>an</th>
+                                            <th>diagcode</th>
+                                            <th>datetime_admit</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_ipd_i10 %}
+                                            <tr>
+                                                <td>{{ item.pid }}</td>
+                                                <td>{{ item.an }}</td>
+                                                <td>{{ item.diagcode }}</td>
+                                                <td>{{ item.datetime_admit }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <h3>แฟ้ม Diagnosis_ipd ผู้ป่วยในความความดัน </h3>
+                                    <ul>
+                                        <li>ไม่พบข้อมูล</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                {% if diagnosis_ipd_i10 %}
+
+                                    <h3>&nbsp;</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>hoscode</th>
+                                            <th>hosname</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_ipd_i10 %}
+                                            <tr>
+                                                <td>{{ item.hospcode }}</td>
+                                                <td>{{ item.hosname }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {#    tab 3 #}
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="row pt-4">
+                            <div class="col-md-9">
+                                {% if diagnosis_opd_e10 %}
+                                    <h3>แฟ้ม Diagnosis_opd ผู้ป่วยนอกโรคเบาหวาน</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>pid</th>
+                                            <th>seq</th>
+                                            <th>diagcode</th>
+                                            <th>date_serv</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_opd_e10 %}
+                                            <tr>
+                                                <td>{{ item.pid }}</td>
+                                                <td>{{ item.seq }}</td>
+                                                <td>{{ item.diagcode }}</td>
+                                                <td>{{ item.date_serv }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <h3>แฟ้ม Diagnosis_opd ผู้ป่วยนอกโรคเบาหวาน </h3>
+                                    <ul>
+                                        <li>ไม่พบข้อมูล</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                {% if diagnosis_opd_e10 %}
+
+                                    <h3>&nbsp;</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>hoscode</th>
+                                            <th>hosname</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_opd_e10 %}
+                                            <tr>
+                                                <td>{{ item.hospcode }}</td>
+                                                <td>{{ item.hosname }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row pt-4 mb-4">
+                            <div class="col-md-9">
+                                {% if diagnosis_ipd_e10 %}
+                                    <h3>แฟ้ม Diagnosis_ipd ผู้ป่วยในโรคเบาหวาน </h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>pid</th>
+                                            <th>an</th>
+                                            <th>diagcode</th>
+                                            <th>datetime_admit</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_ipd_e10 %}
+                                            <tr>
+                                                <td>{{ item.pid }}</td>
+                                                <td>{{ item.an }}</td>
+                                                <td>{{ item.diagcode }}</td>
+                                                <td>{{ item.datetime_admit }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <h3>แฟ้ม Diagnosis_ipd ผู้ป่วยในโรคเบาหวาน </h3>
+                                    <ul>
+                                        <li>ไม่พบข้อมูล</li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                {% if diagnosis_ipd_e10 %}
+
+                                    <h3>&nbsp;</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>hoscode</th>
+                                            <th>hosname</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in diagnosis_ipd_e10 %}
+                                            <tr>
+                                                <td>{{ item.hospcode }}</td>
+                                                <td>{{ item.hosname }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+
+{% endblock %}
