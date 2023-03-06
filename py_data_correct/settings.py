@@ -31,11 +31,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config['WEB_IP'], config['WEB_NAME']]
 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ORIGIN_WHITELIST = ['https://datacorrect.chiangmaihealth.go.th']
+CORS_ORIGIN_WHITELIST = [config['WEB_HTTPS_NAME']]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.chiangmaihealth.go.th', 'https://datacorrect.chiangmaihealth.go.th']
+CSRF_TRUSTED_ORIGINS = [config['WEB_HTTPS_NAME']]
 
 # Application definition
 
