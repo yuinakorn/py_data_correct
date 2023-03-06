@@ -35,6 +35,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = ['https://datacorrect.chiangmaihealth.go.th']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.chiangmaihealth.go.th', 'https://datacorrect.chiangmaihealth.go.th']
+
 # Application definition
 
 INSTALLED_APPS = [
