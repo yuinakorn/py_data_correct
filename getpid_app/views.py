@@ -83,7 +83,7 @@ def search_person(request):
         for row in rows:
             dicts.append(row)
         my_list = dicts
-        print(my_list)
+        # print(my_list)
         context = {'my_list': my_list}
         context.update({'hoscode': str(hoscode), 'cid': str(cid)})
 

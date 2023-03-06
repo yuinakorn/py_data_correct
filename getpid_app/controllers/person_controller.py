@@ -10,7 +10,6 @@ def person(hoscode, cid):
         try:
             with connection.cursor() as cursor:
                 sql = "SELECT PID,TYPEAREA FROM person WHERE HOSPCODE = '" + hoscode + "' AND CID = '" + cid + "'"
-                print(sql)
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 results = []
@@ -20,7 +19,7 @@ def person(hoscode, cid):
                         'typearea': row[1],
                     }
                     results.append(result)
-                # print(results)
+
                 return results
 
         except Exception as e:

@@ -25,10 +25,10 @@
     </div>
 
     <div>
+        <div class="alert alert-success" role="alert">
+            ข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}
+        </div>
         {% for item in my_list %}
-            <div class="row">
-                <p>ข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}</p>
-            </div>
             <div class="row">
                 <div class="mb-3 col-md-3">
                     <label for="pid" class="form-label">pid: </label>
@@ -43,8 +43,6 @@
                     <input type="text" name="typearea" class="form-control" disabled value="{{ item.typearea }}">
                 </div>
             </div>
-
-
         {% endfor %}
     </div>
     <script>

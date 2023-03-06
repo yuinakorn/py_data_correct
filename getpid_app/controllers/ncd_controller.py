@@ -2,7 +2,8 @@ from py_data_correct import database
 
 connection = database.connection
 
-# not in use
+
+# not in use.
 def query_ncd(sql):
     try:
         with connection.cursor() as cursor:
@@ -27,7 +28,6 @@ def ncd(cid):
     if cid is not None:
         try:
             with connection.cursor() as cursor:
-
 
                 # chronic
                 sql = "SELECT chronic.PID,CHRONIC,DATE_DIAG,chronic.HOSPCODE,chospital.hosname FROM chronic " \
@@ -117,11 +117,11 @@ def ncd(cid):
 
                 # diagnosis_opd เบาหวาน ผู้ป่วยใน
                 sql = "SELECT diagnosis_ipd.PID,diagnosis_ipd.AN,diagnosis_ipd.DIAGCODE,diagnosis_ipd.DATETIME_ADMIT, diagnosis_ipd.HOSPCODE,chospital.hosname " \
-                        "FROM diagnosis_ipd " \
-                        "INNER JOIN person on person.PID = diagnosis_ipd.PID AND person.HOSPCODE = diagnosis_ipd.HOSPCODE " \
-                        "INNER JOIN chospital on diagnosis_ipd.HOSPCODE = chospital.hoscode " \
-                        "WHERE person.CID = '"+cid+"' and diagnosis_ipd.DIAGCODE BETWEEN 'E10' and 'E149' " \
-                        "ORDER BY diagnosis_ipd.HOSPCODE"
+                      "FROM diagnosis_ipd " \
+                      "INNER JOIN person on person.PID = diagnosis_ipd.PID AND person.HOSPCODE = diagnosis_ipd.HOSPCODE " \
+                      "INNER JOIN chospital on diagnosis_ipd.HOSPCODE = chospital.hoscode " \
+                      "WHERE person.CID = '" + cid + "' and diagnosis_ipd.DIAGCODE BETWEEN 'E10' and 'E149' " \
+                                                     "ORDER BY diagnosis_ipd.HOSPCODE"
 
                 # results5 = query_ncd(sql)
                 cursor.execute(sql)
@@ -149,5 +149,7 @@ def ncd(cid):
     # results4 = diagnosis_opd เบาหวาน ผู้ป่วยนอก
     # results5 = diagnosis_ipd เบาหวาน ผู้ป่วยใน
 
-    context = {'results1': results1, 'results2': results2, 'results3': results3, 'results4': results4, 'results5': results5}
+    context = {'results1': results1, 'results2': results2, 'results3': results3, 'results4': results4,
+               'results5': results5}
+    # print(context)
     return context

@@ -1,5 +1,27 @@
 {% extends 'getpid_app/components/base.html' %}
+{% load static %}
 
 {% block content %}
-เลือกแฟ้มที่ต้องการค้นหาข้อมูล
+
+    <div class="px-4 py-5 my-1 text-center">
+        <img class="d-block mx-auto mb-4" src="{% static 'img/LOGO_SSJ_1000-1.png' %}" alt="" width="140" >
+        <h1 class="display-5 fw-bold">Data Correct</h1>
+        <div class="col-lg-9 mx-auto">
+            <p class="lead mb-4">ระบบการคืนข้อมูลสำหรับช่วยจัดทำแฟ้ม data_correct ของ 43 แฟ้ม<br>
+            </p>
+            <h5>วัตถุประสงค์</h5>
+            <ul>
+                <li>เพื่อให้ผู้ใช้งานสามารถนำข้อมมูลที่ได้จากระบบไปจัดทำ แฟ้ม data_correct ต่อไปได้</li>
+                <li>เพื่อให้ผู้ใช้เห็นข้อมูลภาพรวมของกลุ่มเป้าหมาย ที่เป็นการบันทึกจากหน่วยบริการอื่นได้</li>
+                <li>เพื่อให้ช่วยให้ข้อมูล hdc ของจังหวัดเชียงใหม่มีความถูกต้อง แม่นยำขึ้น</li>
+            </ul>
+
+
+{#            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">#}
+{#                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" style="background-color: #0a7956">ไปที่ NCD</button>#}
+{#                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>#}
+{#            </div>#}
+        </div>
+    </div>
+
 {% endblock %}

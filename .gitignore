@@ -3,3 +3,4 @@ venv
 *.env
 .idea
 *.iml
+__pycache__
