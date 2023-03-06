@@ -71,6 +71,7 @@ def search_ncd(request):
 
 
 def search_person(request):
+    global color
     if 'hoscode' not in request.POST:
         return render(request, 'getpid_app/person.html', {})
     else:
@@ -83,8 +84,15 @@ def search_person(request):
         for row in rows:
             dicts.append(row)
         my_list = dicts
-        # print(my_list)
-        context = {'my_list': my_list}
+
+        if len(my_list) == 0:
+            color = 'red'
+            show = False
+        else:
+            color = 'green'
+            show = True
+
+        context = {'my_list': my_list, 'color': color, 'show': show}
         context.update({'hoscode': str(hoscode), 'cid': str(cid)})
 
         return render(request, 'getpid_app/person.html', context)

@@ -25,25 +25,40 @@
     </div>
 
     <div>
-        <div class="alert alert-success" role="alert">
-            ข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}
-        </div>
-        {% for item in my_list %}
-            <div class="row">
-                <div class="mb-3 col-md-3">
-                    <label for="pid" class="form-label">pid: </label>
-                    {#                    <input onclick="clickApp({{ item.pid }})" type="text" id="{{ item.pid }}" name="pid"#}
-                    <input type="text" id="id{{ item.pid }}" name="pid"
-                           class="form-control pid copy"
-                           data-clipboard-action="copy" data-clipboard-target="#id{{ item.pid }}"
-                           value="{{ item.pid }}">
-                </div>
-                <div class="mb-3 col-md-3">
-                    <label for="typearea" class="form-label">typearea: </label>
-                    <input type="text" name="typearea" class="form-control" disabled value="{{ item.typearea }}">
+        {% if show is True %}
+            <div class="alert alert-success" role="alert">
+                ข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}
+            </div>
+        {% endif %}
+        {% if color == 'red' %}
+            <div class="alert alert-danger" role="alert">
+                ไม่พบข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}
+            </div>
+        {% endif %}
+        {% if my_list %}
+            <div class="card">
+                <div class="card-body">
+                    {% for item in my_list %}
+
+                        <div class="row">
+                            <div class="mb-3 col-md-3">
+                                <label for="pid" class="form-label">pid: </label>
+                                {#                    <input onclick="clickApp({{ item.pid }})" type="text" id="{{ item.pid }}" name="pid"#}
+                                <input type="text" id="id{{ item.pid }}" name="pid"
+                                       class="form-control pid copy"
+                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.pid }}"
+                                       value="{{ item.pid }}">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="typearea" class="form-label">typearea: </label>
+                                <input type="text" name="typearea" class="form-control" disabled
+                                       value="{{ item.typearea }}">
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        {% endfor %}
+        {% endif %}
     </div>
     <script>
         var clipboard = new ClipboardJS('.copy');
