@@ -1,0 +1,77 @@
+{% extends 'getpid_app/components/base.html' %}
+{% block title %}Data Correct | Labor{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h3>แฟ้ม Labor</h3>
+        </div>
+    </div>
+    <div id="form" class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pid" class="form-label">เลขบัตร ปชช. 13 หลัก</label>
+                <input type="tel" name="cid" class="form-control" placeholder="CID">
+            </div>
+            <button type="submit" class="btn btn-primary my-main-btn">ค้นหา
+            </button>
+        </form>
+    </div>
+    {% if show is True %}
+        <div class="alert alert-success" role="alert">
+            ข้อมูลของเลขบัตรประชาชน <b>{{ cid }}</b>
+        </div>
+    {% endif %}
+
+    {% if show is False and colors == 'red' %}
+        <div class="alert alert-danger" role="alert">
+            ไม่พบข้อมูลของเลขบัตรประชาชน <b>{{ cid }}</b>
+        </div>
+    {% endif %}
+    {% if show is True %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row pt-4">
+                <div class="col">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>GRAVIDA</th>
+                            <th>BDATE</th>
+                            <th>LMP</th>
+                            <th>EDC</th>
+                            <th>BRESULT</th>
+                            <th>BPLACE</th>
+                            <th>BHOSP</th>
+                            <th>LBORN</th>
+                            <th>HOSPCODE</th>
+                            <th>hosname</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in labor_dicts %}
+                        <tr>
+                            <td>{{ item.PID }}</td>
+                            <td>{{ item.GRAVIDA }}</td>
+                            <td>{{ item.BDATE }}</td>
+                            <td>{{ item.LMP }}</td>
+                            <td>{{ item.EDC }}</td>
+                            <td>{{ item.BRESULT }}</td>
+                            <td>{{ item.BPLACE }}</td>
+                            <td>{{ item.BHOSP }}</td>
+                            <td>{{ item.LBORN }}</td>
+                            <td>{{ item.HOSPCODE }}</td>
+                            <td>{{ item.hosname }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

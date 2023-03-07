@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from .forms import SearchForm
-from .controllers import ncd_controller, person_controller
+from .controllers import ncd_controller, person_controller, labor_controller
+
+
+# Index
+def index(request):
+    title = 'Data Correct'
+    return render(request, 'getpid_app/index.html', {'title': title})
 
 
 # NCD
-def search_ncd(request):
+def ncd(request):
     global color
     if 'cid' not in request.POST:
         show = False
@@ -49,7 +55,8 @@ def search_ncd(request):
             dicts.append(row)
         diagnosis_ipd_e10 = dicts
 
-        if len(chronic) == 0 and len(diagnosis_opd_i10) == 0 and len(diagnosis_ipd_i10) == 0 and len(diagnosis_opd_e10) == 0 and len(diagnosis_ipd_e10) == 0:
+        if len(chronic) == 0 and len(diagnosis_opd_i10) == 0 and len(diagnosis_ipd_i10) == 0 and len(
+                diagnosis_opd_e10) == 0 and len(diagnosis_ipd_e10) == 0:
             show = False
             color = 'red'
         else:
@@ -70,7 +77,7 @@ def search_ncd(request):
         return render(request, 'getpid_app/ncd.html', context)
 
 
-def search_person(request):
+def person(request):
     global color
     if 'hoscode' not in request.POST:
         return render(request, 'getpid_app/person.html', {})
@@ -94,9 +101,32 @@ def search_person(request):
 
         context = {'my_list': my_list, 'color': color, 'show': show}
         context.update({'hoscode': str(hoscode), 'cid': str(cid)})
-
+        print(context)
         return render(request, 'getpid_app/person.html', context)
 
 
-def index(request):
-    return render(request, 'getpid_app/index.html', {})
+def labor(request):
+    if 'cid' not in request.POST:
+        show = False
+        return render(request, 'getpid_app/labor.html', {'show': show})
+    else:
+        rows = labor_controller.labor(request.POST.get('cid', None))
+        cid = request.POST.get('cid', None)
+        dicts = []
+        for row in rows:
+            row['BDATE'] = row['BDATE'].strftime('%Y-%m-%d') if row['BDATE'] is not None else None
+            row['LMP'] = row['LMP'].strftime('%Y-%m-%d') if row['LMP'] is not None else None
+            row['EDC'] = row['EDC'].strftime('%Y-%m-%d') if row['EDC'] is not None else None
+            row['LBORN'] = int(row['LBORN']) if row['LBORN'] is not None else None
+            dicts.append(row)
+
+        if len(dicts) == 0:
+            show = False
+            colors = 'red'
+        else:
+            show = True
+            colors = 'green'
+
+        context = {'labor_dicts': dicts, 'show': show, 'colors': colors, 'cid': cid}
+
+    return render(request, 'getpid_app/labor.html', context)

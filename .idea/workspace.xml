@@ -5,17 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21f1108e-3e85-4884-b0fe-b111d530ee88" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/getpid_app/static/img/LOGO_SSJ_1000-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/getpid_app/controllers/labor_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getpid_app/controllers/ncd_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/controllers/ncd_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getpid_app/controllers/person_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/controllers/person_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getpid_app/templates/getpid_app/components/_nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/components/_nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/getpid_app/templates/getpid_app/components/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/components/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getpid_app/templates/getpid_app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/getpid_app/templates/getpid_app/ncd.html" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/ncd.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getpid_app/templates/getpid_app/person.html" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/person.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/getpid_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getpid_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py_data_correct/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_data_correct/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py_data_correct/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/py_data_correct/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,21 +44,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/yuinakorn/_workspace/python/django/py_data_correct/getpid_app/static/img",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/yuinakorn/_workspace/python/django/py_data_correct/getpid_app/static/img&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/getpid_app/static/img" />
@@ -109,7 +109,8 @@
       <workItem from="1677812146071" duration="33872000" />
       <workItem from="1678001214994" duration="4197000" />
       <workItem from="1678026063937" duration="3531000" />
-      <workItem from="1678080808393" duration="23777000" />
+      <workItem from="1678080808393" duration="46927000" />
+      <workItem from="1678205278539" duration="562000" />
     </task>
     <servers />
   </component>

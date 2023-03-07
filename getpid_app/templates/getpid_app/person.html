@@ -1,12 +1,11 @@
 {% extends 'getpid_app/components/base.html' %}
-
+{% block title %}Data Correct | Person{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-md-12 mb-4">
             <h3>แฟ้ม Person </h3>
         </div>
     </div>
-
     <div id="form" class="mb-4">
         <form method="post">
             {% csrf_token %}
@@ -53,6 +52,16 @@
                                 <label for="typearea" class="form-label">typearea: </label>
                                 <input type="text" name="typearea" class="form-control" disabled
                                        value="{{ item.typearea }}">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="typearea" class="form-label">discharge_type: </label>
+                                <input type="text" name="dc_status" class="form-control" disabled
+                                       value="{{ item.dc_status }}">
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="typearea" class="form-label">d_update: </label>
+                                <input type="text" name="d_update" class="form-control" disabled
+                                       value="{{ item.d_update }}">
                             </div>
                         </div>
                     {% endfor %}
