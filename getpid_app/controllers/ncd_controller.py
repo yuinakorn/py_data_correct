@@ -25,6 +25,7 @@ def query_ncd(sql):
 
 
 def ncd(cid):
+    global results1, results2, results3, results4, results5
     if cid is not None:
         try:
             with connection.cursor() as cursor:
