@@ -25,4 +25,3 @@ urlpatterns = [
 ]
 
 handler404 = 'getpid_app.views.handler404'
-
