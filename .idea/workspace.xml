@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21f1108e-3e85-4884-b0fe-b111d530ee88" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getpid_app/controllers/ncd_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/controllers/ncd_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getpid_app/templates/getpid_app/components/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/templates/getpid_app/components/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getpid_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getpid_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/getpid_app/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +101,7 @@
       <workItem from="1678001214994" duration="4197000" />
       <workItem from="1678026063937" duration="3531000" />
       <workItem from="1678080808393" duration="46927000" />
-      <workItem from="1678205278539" duration="5298000" />
+      <workItem from="1678205278539" duration="6164000" />
     </task>
     <servers />
   </component>
