@@ -11,11 +11,11 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="pid" class="form-label">เลขบัตร ปชช. 13 หลัก</label>
-                <input type="tel" name="cid" class="form-control" placeholder="CID">
+                <input type="tel" name="cid" class="form-control" placeholder="CID" required>
             </div>
             <div class="mb-3">
                 <label for="hcode" class="form-label">รหัสหน่วยบริการ 5 หลัก</label>
-                <input type="tel" name="hoscode" class="form-control" placeholder="HCODE">
+                <input type="tel" name="hoscode" class="form-control" placeholder="HCODE" required>
             </div>
             <button type="submit" class="btn btn-primary"
                     style="background-color: #0A7956FF; border: 1px solid #209470">ค้นหา

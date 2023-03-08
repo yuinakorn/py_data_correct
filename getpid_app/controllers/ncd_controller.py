@@ -1,5 +1,8 @@
 from py_data_correct import database
+import pymysql
+from dotenv import dotenv_values
 
+config_env = dotenv_values(".env")
 
 # connection = database.connection
 
@@ -28,6 +31,13 @@ def query_ncd(sql):
 
 def ncd(cid):
     # global results1, results2, results3, results4, results5
+    connection = pymysql.connect(host=config_env['DB_HOST'],
+                                 user=config_env['DB_USER'],
+                                 password=config_env['DB_PASS'],
+                                 db=config_env['DB_NAME'],
+                                 charset='utf8mb4',
+                                 port=int(config_env["DB_PORT"]),
+                                 )
     if cid is not None:
         results1 = None
         results2 = None
@@ -36,7 +46,7 @@ def ncd(cid):
         results5 = None
 
         try:
-            connection = database.connection
+            # connection = database.connection
             with connection.cursor() as cursor:
 
                 # chronic

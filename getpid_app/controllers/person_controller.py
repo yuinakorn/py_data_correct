@@ -1,16 +1,28 @@
 from py_data_correct import database
+import pymysql
+from dotenv import dotenv_values
 
-connection = database.connection
+config_env = dotenv_values(".env")
+
+
+# connection = database.connection
 
 
 def person(hoscode, cid):
     global results
+    connection = pymysql.connect(host=config_env['DB_HOST'],
+                                 user=config_env['DB_USER'],
+                                 password=config_env['DB_PASS'],
+                                 db=config_env['DB_NAME'],
+                                 charset='utf8mb4',
+                                 port=int(config_env["DB_PORT"]),
+                                 )
     if hoscode is not None or cid is not None:
         try:
             with connection.cursor() as cursor:
                 sql = "SELECT PID,TYPEAREA,concat('(',DISCHARGE,')',cdischarge.dischargedesc) AS dc_status,D_UPDATE " \
-                        "FROM person INNER JOIN cdischarge on cdischarge.dischargecode = person.DISCHARGE " \
-                        "WHERE HOSPCODE = '" + hoscode + "' AND CID = '" + cid + "'"
+                      "FROM person INNER JOIN cdischarge on cdischarge.dischargecode = person.DISCHARGE " \
+                      "WHERE HOSPCODE = '" + hoscode + "' AND CID = '" + cid + "'"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 results = []
@@ -29,4 +41,5 @@ def person(hoscode, cid):
             print(e)
             print("Error: unable to fetch data")
 
+    connection.close()
     return results
