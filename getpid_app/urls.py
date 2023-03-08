@@ -1,8 +1,6 @@
 from django.urls import path
 from . import views
-
-from .views import error_404
-
+# from .views import handler404
 
 urlpatterns = [
     path('person/', views.person, name='person'),
@@ -11,5 +9,4 @@ urlpatterns = [
     path('', views.index, name='index'),
 ]
 
-handler404 = error_404
 

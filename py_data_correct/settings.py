@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config['SETTING_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config['SETTING_DEBUG']
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config['WEB_IP'], config['WEB_NAME']]
 
@@ -99,7 +99,11 @@ DATABASES = {
         'USER': config['DB_USER'],
         'PASSWORD': config['DB_PASS'],
         'HOST': config['DB_HOST'],
-        'PORT': config['DB_PORT']
+        'PORT': config['DB_PORT'],
+        'OPTIONS': {
+            'connect_timeout': 60,
+            'charset': 'utf8mb4',
+        },
     }
 }
 

@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .forms import SearchForm
 from .controllers import ncd_controller, person_controller, labor_controller
-from django.shortcuts import render
+
+from django.shortcuts import redirect
 
 
-def error_404(request, exception):
-    return render(request, 'getpid_app/404.html', {})
+def handler404(request, exception):
+    return render(request, 'getpid_app/404.html')
 
 
 # Index

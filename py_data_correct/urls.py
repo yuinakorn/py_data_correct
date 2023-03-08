@@ -24,3 +24,5 @@ urlpatterns = [
     # path('search/', views.search)
 ]
 
+handler404 = 'getpid_app.views.handler404'
+
