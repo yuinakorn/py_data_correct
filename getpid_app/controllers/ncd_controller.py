@@ -1,11 +1,13 @@
 from py_data_correct import database
 
-connection = database.connection
+
+# connection = database.connection
 
 
 # not in use.
 def query_ncd(sql):
     try:
+        connection = database.connection
         with connection.cursor() as cursor:
             cursor.execute(sql)
             rows = cursor.fetchall()
@@ -25,9 +27,16 @@ def query_ncd(sql):
 
 
 def ncd(cid):
-    global results1, results2, results3, results4, results5
+    # global results1, results2, results3, results4, results5
     if cid is not None:
+        results1 = None
+        results2 = None
+        results3 = None
+        results4 = None
+        results5 = None
+
         try:
+            connection = database.connection
             with connection.cursor() as cursor:
 
                 # chronic
@@ -46,7 +55,7 @@ def ncd(cid):
                         'chronic': row[1],
                         'date_diag': row[2],
                         'hospcode': row[3],
-                        'hosname': row[4],
+                        'hosname': row[4].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.'),
                     }
                     results1.append(result)
 
@@ -68,7 +77,7 @@ def ncd(cid):
                         'diagcode': row[2],
                         'date_serv': row[3],
                         'hospcode': row[4],
-                        'hosname': row[5],
+                        'hosname': row[5].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.'),
                     }
                     results2.append(result)
 
@@ -90,7 +99,7 @@ def ncd(cid):
                         'diagcode': row[2],
                         'datetime_admit': row[3],
                         'hospcode': row[4],
-                        'hosname': row[5],
+                        'hosname': row[5].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.'),
                     }
                     results3.append(result)
 
@@ -112,7 +121,7 @@ def ncd(cid):
                         'diagcode': row[2],
                         'date_serv': row[3],
                         'hospcode': row[4],
-                        'hosname': row[5],
+                        'hosname': row[5].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.'),
                     }
                     results4.append(result)
 
@@ -135,10 +144,9 @@ def ncd(cid):
                         'diagcode': row[2],
                         'datetime_admit': row[3],
                         'hospcode': row[4],
-                        'hosname': row[5],
+                        'hosname': row[5].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.')
                     }
                     results5.append(result)
-
 
         except Exception as e:
             print(e)
@@ -150,6 +158,11 @@ def ncd(cid):
     # results4 = diagnosis_opd เบาหวาน ผู้ป่วยนอก
     # results5 = diagnosis_ipd เบาหวาน ผู้ป่วยใน
 
+    results1 = results1 if results1 is not None else []
+    results2 = results2 if results2 is not None else []
+    results3 = results3 if results3 is not None else []
+    results4 = results4 if results4 is not None else []
+    results5 = results5 if results5 is not None else []
     context = {'results1': results1, 'results2': results2, 'results3': results3, 'results4': results4,
                'results5': results5}
     # print(context)

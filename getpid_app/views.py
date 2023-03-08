@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from .forms import SearchForm
 from .controllers import ncd_controller, person_controller, labor_controller
+from django.shortcuts import render
+
+
+def error_404(request, exception):
+    return render(request, 'getpid_app/404.html', {})
 
 
 # Index
@@ -19,6 +24,7 @@ def ncd(request):
         rows = ncd_controller.ncd(request.POST.get('cid', None))
         # show = True
         cid = request.POST.get('cid', None)
+        print(cid)  # to check error cid
 
         # chronic
         dicts = []
