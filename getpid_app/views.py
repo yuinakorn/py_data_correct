@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from .controllers import ncd_controller, person_controller, labor_controller
 
-from django.shortcuts import redirect
-
 
 def handler404(request, exception):
     return render(request, 'getpid_app/404.html')

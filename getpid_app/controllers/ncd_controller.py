@@ -111,6 +111,7 @@ def ncd(cid):
                       "where person.CID = '" + cid + "' AND diagnosis_opd.DIAGCODE BETWEEN 'E10' AND 'E149' " \
                                                      "ORDER BY diagnosis_opd.HOSPCODE"
                 # results4 = query_ncd(sql)
+
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 results4 = []

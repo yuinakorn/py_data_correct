@@ -29,6 +29,7 @@ SECRET_KEY = config['SETTING_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config['SETTING_DEBUG']
 
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', config['WEB_IP'], config['WEB_NAME']]
 
 # CORS_ORIGIN_ALLOW_ALL = True
