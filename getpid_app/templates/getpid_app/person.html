@@ -38,32 +38,32 @@
                         <div class="row">
                             <div class="mb-3 col">
                                 <label for="pid" class="form-label">hoscode: </label>
-                                <input type="text" id="id{{ item.hoscode }}" name="pid"
+                                <input type="text" id="id{{ item.HOSPCODE }}" name="pid"
                                        class="form-control pid copy"
-                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.hoscode }}"
-                                       value="{{ item.hoscode }}">
+                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.HOSPCODE }}"
+                                       value="{{ item.HOSPCODE }}">
                             </div>
                             <div class="mb-3 col">
                                 <label for="pid" class="form-label">pid: </label>
-                                <input type="text" id="id{{ item.pid }}" name="pid"
+                                <input type="text" id="id{{ item.PID }}" name="pid"
                                        class="form-control pid copy"
-                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.pid }}"
-                                       value="{{ item.pid }}">
+                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.PID }}"
+                                       value="{{ item.PID }}">
                             </div>
                             <div class="mb-3 col">
-                                <label for="typearea" class="form-label">typearea: </label>
+                                <label for="TYPEAREA" class="form-label">typearea: </label>
                                 <input type="text" name="typearea" class="form-control" disabled
-                                       value="{{ item.typearea }}">
+                                       value="{{ item.TYPEAREA }}">
                             </div>
                             <div class="mb-3 col">
-                                <label for="typearea" class="form-label">discharge_type: </label>
+                                <label for="dc_status" class="form-label">discharge_type: </label>
                                 <input type="text" name="dc_status" class="form-control" disabled
                                        value="{{ item.dc_status }}">
                             </div>
                             <div class="mb-3 col">
-                                <label for="typearea" class="form-label">d_update: </label>
+                                <label for="D_UPDATE" class="form-label">d_update: </label>
                                 <input type="text" name="d_update" class="form-control" disabled
-                                       value="{{ item.d_update }}">
+                                       value="{{ item.D_UPDATE }}">
                             </div>
                         </div>
                     {% endfor %}

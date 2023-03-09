@@ -87,27 +87,47 @@ def person(request):
     if 'cid' not in request.POST:
         return render(request, 'getpid_app/person.html', {})
     else:
-        rows = person_controller.person(request.POST.get('hoscode', None), request.POST.get('cid', None))
+        rows = person_controller.person(request.POST.get('cid', None))
         dicts = []
-
-        # hoscode = request.POST.get('hoscode', None)
         cid = request.POST.get('cid', None)
 
         for row in rows:
+            row['D_UPDATE'] = str(row['D_UPDATE']) if row['D_UPDATE'] is not None else None
             dicts.append(row)
-        my_list = dicts
 
-        if len(my_list) == 0:
+        if len(dicts) == 0:
             color = 'red'
             show = False
         else:
             color = 'green'
             show = True
 
-        context = {'my_list': my_list, 'color': color, 'show': show, 'cid': str(cid)}
-        # context.update({'hoscode': str(hoscode), 'cid': str(cid)})
-        print(context)
+        context = {'my_list': dicts, 'color': color, 'show': show, 'cid': str(cid)}
         return render(request, 'getpid_app/person.html', context)
+
+
+def hoscode(request):
+    if 'hoscode' not in request.POST:
+        return render(request, 'getpid_app/hoscode.html', {})
+    else:
+        rows = person_controller.hoscode(request.POST.get('hoscode', None))
+        dicts = []
+
+        for row in rows:
+            row['status'] = 'เปิดใช้งาน' if row['status'] == 1 else 'ปิดใช้งาน'
+            row['hdc_regist'] = 'เปิดใช้งาน' if row['hdc_regist'] == 1 else 'ปิดใช้งาน'
+            row['hosname'] = row['hosname'].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.')
+            dicts.append(row)
+
+        if len(dicts) == 0:
+            color = 'red'
+            show = False
+        else:
+            color = 'green'
+            show = True
+
+        context = {'my_list': dicts, 'color': color, 'show': show, 'hoscode': str(request.POST.get('hoscode', None))}
+        return render(request, 'getpid_app/hoscode.html', context)
 
 
 def labor(request):

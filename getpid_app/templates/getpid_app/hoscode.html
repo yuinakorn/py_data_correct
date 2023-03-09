@@ -1,10 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'getpid_app/components/base.html' %}
+
+{% block title %} Data Search | Hoscode {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h3>ค้นหารหัสหน่วยบริการ</h3>
+        </div>
+    </div>
+    <div id="form" class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pid" class="form-label">รหัสหน่วยบริการ 5 หลัก</label>
+                <input type="tel" name="hoscode" class="form-control" placeholder="HOSCODE" required>
+            </div>
+            <button type="submit" class="btn btn-primary"
+                    style="background-color: #0A7956FF; border: 1px solid #209470">ค้นหา
+            </button>
+        </form>
+    </div>
+
+    {% if show is True %}
+        <div class="alert alert-success" role="alert">
+            ข้อมูลของ hoscode: {{ hoscode }}
+        </div>
+    {% endif %}
+    {% if color == 'red' %}
+        <div class="alert alert-danger" role="alert">
+            ไม่พบข้อมูลของ hoscode: {{ hoscode }}
+        </div>
+    {% endif %}
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row pt-4">
+                <div class="col">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">รหัสหน่วยบริการ</th>
+                            <th scope="col">ชื่อหน่วยบริการ</th>
+                            <th scope="col">ประเภทหน่วยบริการ</th>
+                            <th scope="col">อำเภอ</th>
+                            <th scope="col">ตำบล</th>
+                            <th scope="col">สถานะใน HDC</th>
+                            <th scope="col">สถานะ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for data in my_list %}
+                            <tr>
+                                <td>{{ data.hoscode }}</td>
+                                <td>{{ data.hosname }}</td>
+                                <td>{{ data.hostypename }}</td>
+                                <td>{{ data.ampurname }}</td>
+                                <td>{{ data.tambonname }}</td>
+                                <td>{{ data.hdc_regist }}</td>
+                                <td>{{ data.status }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+{% endblock %}
