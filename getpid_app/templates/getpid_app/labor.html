@@ -11,7 +11,7 @@
         <form method="post">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="pid" class="form-label">เลขบัตร ปชช. 13 หลัก</label>
+                <label for="pid" class="form-label">เลขบัตร 13 หลัก</label>
                 <input type="tel" name="cid" class="form-control" placeholder="CID">
             </div>
             <button type="submit" class="btn btn-primary my-main-btn">ค้นหา
@@ -20,13 +20,13 @@
     </div>
     {% if show is True %}
         <div class="alert alert-success" role="alert">
-            ข้อมูลของเลขบัตรประชาชน <b>{{ cid }}</b>
+            ข้อมูลของ <b>{{ cid }}</b>
         </div>
     {% endif %}
 
     {% if show is False and colors == 'red' %}
         <div class="alert alert-danger" role="alert">
-            ไม่พบข้อมูลของเลขบัตรประชาชน <b>{{ cid }}</b>
+            ไม่พบข้อมูลของ <b>{{ cid }}</b>
         </div>
     {% endif %}
     {% if show is True %}

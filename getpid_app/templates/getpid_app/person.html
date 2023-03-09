@@ -10,12 +10,8 @@
         <form method="post">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="pid" class="form-label">เลขบัตร ปชช. 13 หลัก</label>
+                <label for="pid" class="form-label">เลขบัตร 13 หลัก</label>
                 <input type="tel" name="cid" class="form-control" placeholder="CID" required>
-            </div>
-            <div class="mb-3">
-                <label for="hcode" class="form-label">รหัสหน่วยบริการ 5 หลัก</label>
-                <input type="tel" name="hoscode" class="form-control" placeholder="HCODE" required>
             </div>
             <button type="submit" class="btn btn-primary"
                     style="background-color: #0A7956FF; border: 1px solid #209470">ค้นหา
@@ -26,12 +22,12 @@
     <div>
         {% if show is True %}
             <div class="alert alert-success" role="alert">
-                ข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}
+                ข้อมูลของ Cid: {{ cid }}
             </div>
         {% endif %}
         {% if color == 'red' %}
             <div class="alert alert-danger" role="alert">
-                ไม่พบข้อมูลของ Cid: {{ cid }} ในหน่วยบริการ : {{ hoscode }}
+                ไม่พบข้อมูลของ Cid: {{ cid }}
             </div>
         {% endif %}
         {% if my_list %}
@@ -40,25 +36,31 @@
                     {% for item in my_list %}
 
                         <div class="row">
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col">
+                                <label for="pid" class="form-label">hoscode: </label>
+                                <input type="text" id="id{{ item.hoscode }}" name="pid"
+                                       class="form-control pid copy"
+                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.hoscode }}"
+                                       value="{{ item.hoscode }}">
+                            </div>
+                            <div class="mb-3 col">
                                 <label for="pid" class="form-label">pid: </label>
-                                {#                    <input onclick="clickApp({{ item.pid }})" type="text" id="{{ item.pid }}" name="pid"#}
                                 <input type="text" id="id{{ item.pid }}" name="pid"
                                        class="form-control pid copy"
                                        data-clipboard-action="copy" data-clipboard-target="#id{{ item.pid }}"
                                        value="{{ item.pid }}">
                             </div>
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col">
                                 <label for="typearea" class="form-label">typearea: </label>
                                 <input type="text" name="typearea" class="form-control" disabled
                                        value="{{ item.typearea }}">
                             </div>
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col">
                                 <label for="typearea" class="form-label">discharge_type: </label>
                                 <input type="text" name="dc_status" class="form-control" disabled
                                        value="{{ item.dc_status }}">
                             </div>
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col">
                                 <label for="typearea" class="form-label">d_update: </label>
                                 <input type="text" name="d_update" class="form-control" disabled
                                        value="{{ item.d_update }}">

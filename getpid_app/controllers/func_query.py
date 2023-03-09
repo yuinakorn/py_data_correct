@@ -1,4 +1,3 @@
-from py_data_correct import database
 import pymysql
 from dotenv import dotenv_values
 
@@ -27,23 +26,7 @@ def query(sql):
                 # print(result)
     except Exception as e:
         print(e)
-        print("Error: unable to fetch data")
+        print("Error: function query unable to fetch data")
 
     # print(results)
-    connection.close()
-    return results
-
-
-def labor(cid):
-    results = None
-    if cid is not None:
-        sql = "SELECT labor.PID,labor.GRAVIDA,labor.BDATE, " \
-              "labor.LMP,labor.EDC,labor.BRESULT,labor.BPLACE,labor.BHOSP,labor.LBORN,labor.HOSPCODE,chospital.hosname " \
-              "FROM labor " \
-              "INNER JOIN person ON labor.hospcode = person.HOSPCODE AND labor.PID = person.PID " \
-              "INNER JOIN chospital on labor.HOSPCODE = chospital.hoscode " \
-              "WHERE person.CID = '" + cid + "' ORDER BY labor.HOSPCODE, labor.BDATE DESC"
-
-        results = query(sql)
-
     return results

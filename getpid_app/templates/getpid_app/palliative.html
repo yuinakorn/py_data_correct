@@ -1,0 +1,162 @@
+{% extends 'getpid_app/components/base.html' %}
+{% block title %}Data Correct | Palliative{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h3>แฟ้ม tmp_palliative</h3>
+        </div>
+    </div>
+    <div id="form" class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pid" class="form-label">เลขบัตร 13 หลัก</label>
+                <input type="tel" name="cid" class="form-control" placeholder="CID">
+            </div>
+            <button type="submit" class="btn btn-primary my-main-btn">ค้นหา
+            </button>
+        </form>
+    </div>
+    {% if show is True %}
+        <div class="alert alert-success" role="alert">
+            ข้อมูลของ <b>{{ cid }}</b>
+        </div>
+    {% endif %}
+
+    {% if show is False and colors == 'red' %}
+        <div class="alert alert-danger" role="alert">
+            ไม่พบข้อมูลของ <b>{{ cid }}</b>
+        </div>
+    {% endif %}
+
+
+    {% if show is True %}
+        <div class="card mb-4">
+        <div class="card-body">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-home"
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">g_code
+                </button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false">pharma_code
+                </button>
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                        type="button" role="tab" aria-controls="nav-contact" aria-selected="false">careplan_code
+                </button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+             aria-labelledby="nav-home-tab">
+            <div class="row pt-4">
+                <div class="col">
+                    {% if gcode_dicts %}
+                        <h3>g_code</h3>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>HOSPCODE</th>
+                                <th>PID</th>
+                                <th>DATE_SERV</th>
+                                <th>DIAGCODE</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in gcode_dicts %}
+                                <tr>
+                                    <td>{{ item.HOSPCODE }}</td>
+                                    <td>{{ item.PID }}</td>
+                                    <td>{{ item.DATE_SERV }}</td>
+                                    <td>{{ item.DIAGCODE }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>g_code</h3>
+                        <ul>
+                            <li>ไม่พบข้อมูล</li>
+                        </ul>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="row pt-4">
+                <div class="col">
+                    {% if pharma_list %}
+                        <h3>pharma_code</h3>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>HOSPCODE</th>
+                                <th>PID</th>
+                                <th>DATETIME_ADMIT</th>
+                                <th>DIDSTD</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in pharma_list %}
+                                <tr>
+                                    <td>{{ item.HOSPCODE }}</td>
+                                    <td>{{ item.PID }}</td>
+                                    <td>{{ item.DATETIME_ADMIT }}</td>
+                                    <td>{{ item.DIDSTD }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>pharma_code</h3>
+                        <ul>
+                            <li>ไม่พบข้อมูล</li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="row pt-4">
+                <div class="col">
+                    {% if careplan_list %}
+                        <h3>careplan_code</h3>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>HOSPCODE</th>
+                                <th>PID</th>
+                                <th>DATE_SERV</th>
+                                <th>DIAGCODE</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in careplan_list %}
+                                <tr>
+                                    <td>{{ item.HOSPCODE }}</td>
+                                    <td>{{ item.PID }}</td>
+                                    <td>{{ item.DATE_SERV }}</td>
+                                    <td>{{ item.DIAGCODE }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>careplan_code</h3>
+                        <ul>
+                            <li>ไม่พบข้อมูล</li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+    {% endif %}
+
+{% endblock %}

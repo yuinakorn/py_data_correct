@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .controllers import ncd_controller, person_controller, labor_controller
+from .controllers import ncd_controller, person_controller, labor_controller, palliative_controller
+import json
 
 
 def handler404(request, exception):
@@ -83,13 +84,13 @@ def ncd(request):
 
 def person(request):
     global color
-    if 'hoscode' not in request.POST:
+    if 'cid' not in request.POST:
         return render(request, 'getpid_app/person.html', {})
     else:
         rows = person_controller.person(request.POST.get('hoscode', None), request.POST.get('cid', None))
         dicts = []
 
-        hoscode = request.POST.get('hoscode', None)
+        # hoscode = request.POST.get('hoscode', None)
         cid = request.POST.get('cid', None)
 
         for row in rows:
@@ -103,8 +104,8 @@ def person(request):
             color = 'green'
             show = True
 
-        context = {'my_list': my_list, 'color': color, 'show': show}
-        context.update({'hoscode': str(hoscode), 'cid': str(cid)})
+        context = {'my_list': my_list, 'color': color, 'show': show, 'cid': str(cid)}
+        # context.update({'hoscode': str(hoscode), 'cid': str(cid)})
         print(context)
         return render(request, 'getpid_app/person.html', context)
 
@@ -131,6 +132,45 @@ def labor(request):
             show = True
             colors = 'green'
 
+        # print(dicts)
         context = {'labor_dicts': dicts, 'show': show, 'colors': colors, 'cid': cid}
 
     return render(request, 'getpid_app/labor.html', context)
+
+
+def palliative(request):
+    g_list = ''
+    pharma_list = ''
+    careplan_list = ''
+    if 'cid' not in request.POST:
+        show = False
+        return render(request, 'getpid_app/palliative.html', {'show': show})
+    else:
+        rows = palliative_controller.palliative(request.POST.get('cid', None))
+        if len(rows) > 0:
+            cid = request.POST.get('cid', None)
+            g_list = [rows[0].get('g_code', None)]
+            pharma_list = [rows[0].get('pharma_code', None)]
+            careplan_list = [rows[0].get('careplan_code', None)]
+
+            g_list = json.loads(str(g_list).replace('[\'', '[').replace('\']', ']'))
+            pharma_list = json.loads(str(pharma_list).replace('[\'', '[').replace('\']', ']'))
+            careplan_list = json.loads(str(careplan_list).replace('[\'', '[').replace('\']', ']'))
+
+            show = True
+            colors = 'green'
+        else:
+            cid = request.POST.get('cid', None)
+            show = False
+            colors = 'red'
+
+        context = {
+            'cid': cid,
+            'show': show,
+            'colors': colors,
+            'gcode_dicts': g_list,
+            'pharma_list': pharma_list,
+            'careplan_list': careplan_list,
+        }
+
+    return render(request, 'getpid_app/palliative.html', context)

@@ -17,21 +17,22 @@ def person(hoscode, cid):
                                  charset='utf8mb4',
                                  port=int(config_env["DB_PORT"]),
                                  )
-    if hoscode is not None or cid is not None:
+    if cid is not None:
         try:
             with connection.cursor() as cursor:
-                sql = "SELECT PID,TYPEAREA,concat('(',DISCHARGE,')',cdischarge.dischargedesc) AS dc_status,D_UPDATE " \
+                sql = "SELECT person.HOSPCODE,PID,TYPEAREA,concat('(',DISCHARGE,')',cdischarge.dischargedesc) AS dc_status,D_UPDATE " \
                       "FROM person INNER JOIN cdischarge on cdischarge.dischargecode = person.DISCHARGE " \
-                      "WHERE HOSPCODE = '" + hoscode + "' AND CID = '" + cid + "'"
+                      "WHERE CID = '" + cid + "' ORDER BY D_UPDATE DESC"
                 cursor.execute(sql)
                 rows = cursor.fetchall()
                 results = []
                 for row in rows:
                     result = {
-                        'pid': row[0],
-                        'typearea': row[1],
-                        'dc_status': row[2],
-                        'd_update': str(row[3]),
+                        'hoscode': row[0],
+                        'pid': row[1],
+                        'typearea': row[2],
+                        'dc_status': row[3],
+                        'd_update': str(row[4]),
                     }
                     results.append(result)
 
