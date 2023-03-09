@@ -32,36 +32,41 @@
         </div>
     {% endif %}
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row pt-4">
-                <div class="col">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">รหัสหน่วยบริการ</th>
-                            <th scope="col">ชื่อหน่วยบริการ</th>
-                            <th scope="col">ประเภทหน่วยบริการ</th>
-                            <th scope="col">อำเภอ</th>
-                            <th scope="col">ตำบล</th>
-                            <th scope="col">สถานะใน HDC</th>
-                            <th scope="col">สถานะ</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for data in my_list %}
+    {% if my_list %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row pt-4">
+                    <div class="col">
+                        <table class="table table-striped">
+                            <thead>
                             <tr>
-                                <td>{{ data.hoscode }}</td>
-                                <td>{{ data.hosname }}</td>
-                                <td>{{ data.hostypename }}</td>
-                                <td>{{ data.ampurname }}</td>
-                                <td>{{ data.tambonname }}</td>
-                                <td>{{ data.hdc_regist }}</td>
-                                <td>{{ data.status }}</td>
+                                <th scope="col">รหัสหน่วยบริการ</th>
+                                <th scope="col">ชื่อหน่วยบริการ</th>
+                                <th scope="col">ประเภทหน่วยบริการ</th>
+                                <th scope="col">อำเภอ</th>
+                                <th scope="col">ตำบล</th>
+                                <th scope="col">สถานะใน HDC</th>
+                                <th scope="col">สถานะ</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
+                            </thead>
+                            <tbody>
+                            {% for data in my_list %}
+                                <tr>
+                                    <td>{{ data.hoscode }}</td>
+                                    <td>{{ data.hosname }}</td>
+                                    <td>{{ data.hostypename }}</td>
+                                    <td>{{ data.ampurname }}</td>
+                                    <td>{{ data.tambonname }}</td>
+                                    <td>{{ data.hdc_regist }}</td>
+                                    <td>{{ data.status }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}
