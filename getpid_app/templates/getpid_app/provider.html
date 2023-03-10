@@ -1,0 +1,76 @@
+{% extends 'getpid_app/components/base.html' %}
+{% block title %}Data Correct | Provider {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <h3>แฟ้ม Provider (ผู้ให้บริการ) </h3>
+        </div>
+    </div>
+    <div id="form" class="mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pid" class="form-label">เลขบัตร 13 หลัก</label>
+                <input type="tel" name="cid" class="form-control" placeholder="CID" required>
+            </div>
+            <button type="submit" class="btn btn-primary"
+                    style="background-color: #0A7956FF; border: 1px solid #209470">ค้นหา
+            </button>
+        </form>
+    </div>
+
+    <div>
+        {% if show is True %}
+            <div class="alert alert-success" role="alert">
+                ข้อมูลของ Cid: {{ cid }}
+            </div>
+        {% endif %}
+        {% if color == 'red' %}
+            <div class="alert alert-danger" role="alert">
+                ไม่พบข้อมูลของ Cid: {{ cid }}
+            </div>
+        {% endif %}
+        {% if my_list %}
+            <div class="card">
+                <div class="card-body">
+                    {% for item in my_list %}
+
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <label for="pid" class="form-label">hoscode: </label>
+                                <input type="text" id="id{{ item.HOSPCODE }}" name="pid"
+                                       class="form-control pid copy"
+                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.HOSPCODE }}"
+                                       value="{{ item.HOSPCODE }}">
+                            </div>
+                            <div class="mb-3 col">
+                                <label for="PROVIDERTYPE" class="form-label">providertype: </label>
+                                <input type="text" id="id{{ item.PROVIDERTYPE }}" name="pid"
+                                       class="form-control pid copy"
+                                       data-clipboard-action="copy" data-clipboard-target="#id{{ item.PROVIDERTYPE }}"
+                                       value="({{ item.PROVIDERTYPE }}) {{ item.providertype }}">
+                            </div>
+                            <div class="mb-3 col">
+                                <label for="STARTDATE" class="form-label">startdate: </label>
+                                <input type="text" name="startdate" class="form-control" disabled
+                                       value="{{ item.STARTDATE }}">
+                            </div>
+                            <div class="mb-3 col">
+                                <label for="outdate" class="form-label">outdate: </label>
+                                <input type="text" name="outdate" class="form-control" disabled
+                                       value="{{ item.OUTDATE }}">
+                            </div>
+                            <div class="mb-3 col">
+                                <label for="D_UPDATE" class="form-label">d_update: </label>
+                                <input type="text" name="d_update" class="form-control" disabled
+                                       value="{{ item.D_UPDATE }}">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

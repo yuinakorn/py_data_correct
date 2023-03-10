@@ -82,54 +82,6 @@ def ncd(request):
         return render(request, 'getpid_app/ncd.html', context)
 
 
-def person(request):
-    global color
-    if 'cid' not in request.POST:
-        return render(request, 'getpid_app/person.html', {})
-    else:
-        rows = person_controller.person(request.POST.get('cid', None))
-        dicts = []
-        cid = request.POST.get('cid', None)
-
-        for row in rows:
-            row['D_UPDATE'] = str(row['D_UPDATE']) if row['D_UPDATE'] is not None else None
-            dicts.append(row)
-
-        if len(dicts) == 0:
-            color = 'red'
-            show = False
-        else:
-            color = 'green'
-            show = True
-
-        context = {'my_list': dicts, 'color': color, 'show': show, 'cid': str(cid)}
-        return render(request, 'getpid_app/person.html', context)
-
-
-def hoscode(request):
-    if 'hoscode' not in request.POST:
-        return render(request, 'getpid_app/hoscode.html', {})
-    else:
-        rows = person_controller.hoscode(request.POST.get('hoscode', None))
-        dicts = []
-
-        for row in rows:
-            row['status'] = 'เปิดใช้งาน' if row['status'] == 1 else 'ปิดใช้งาน'
-            row['hdc_regist'] = 'เปิดใช้งาน' if row['hdc_regist'] == 1 else 'ปิดใช้งาน'
-            row['hosname'] = row['hosname'].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.')
-            dicts.append(row)
-
-        if len(dicts) == 0:
-            color = 'red'
-            show = False
-        else:
-            color = 'green'
-            show = True
-
-        context = {'my_list': dicts, 'color': color, 'show': show, 'hoscode': str(request.POST.get('hoscode', None))}
-        return render(request, 'getpid_app/hoscode.html', context)
-
-
 def labor(request):
     if 'cid' not in request.POST:
         show = False
@@ -194,3 +146,76 @@ def palliative(request):
         }
 
     return render(request, 'getpid_app/palliative.html', context)
+
+
+
+def person(request):
+    global color
+    if 'cid' not in request.POST:
+        return render(request, 'getpid_app/person.html', {})
+    else:
+        rows = person_controller.person(request.POST.get('cid', None))
+        dicts = []
+        cid = request.POST.get('cid', None)
+
+        for row in rows:
+            row['D_UPDATE'] = str(row['D_UPDATE']) if row['D_UPDATE'] is not None else None
+            dicts.append(row)
+
+        if len(dicts) == 0:
+            color = 'red'
+            show = False
+        else:
+            color = 'green'
+            show = True
+
+        context = {'my_list': dicts, 'color': color, 'show': show, 'cid': str(cid)}
+        return render(request, 'getpid_app/person.html', context)
+
+
+def hoscode(request):
+    if 'hoscode' not in request.POST:
+        return render(request, 'getpid_app/hoscode.html', {})
+    else:
+        rows = person_controller.hoscode(request.POST.get('hoscode', None))
+        dicts = []
+
+        for row in rows:
+            row['status'] = 'เปิดใช้งาน' if row['status'] == 1 else 'ปิดใช้งาน'
+            row['hdc_regist'] = 'เปิดใช้งาน' if row['hdc_regist'] == 1 else 'ปิดใช้งาน'
+            row['hosname'] = row['hosname'].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.')
+            dicts.append(row)
+
+        if len(dicts) == 0:
+            color = 'red'
+            show = False
+        else:
+            color = 'green'
+            show = True
+
+        context = {'my_list': dicts, 'color': color, 'show': show, 'hoscode': str(request.POST.get('hoscode', None))}
+        return render(request, 'getpid_app/hoscode.html', context)
+
+
+def provider(request):
+    if 'cid' not in request.POST:
+        return render(request, 'getpid_app/provider.html', {})
+    else:
+        rows = person_controller.provider(request.POST.get('cid', None))
+        dicts = []
+        cid = request.POST.get('cid', None)
+
+        for row in rows:
+            row['D_UPDATE'] = str(row['D_UPDATE']) if row['D_UPDATE'] is not None else None
+            row['STARTDATE'] = str(row['STARTDATE']) if row['STARTDATE'] is not None else None
+            dicts.append(row)
+
+        if len(dicts) == 0:
+            color = 'red'
+            show = False
+        else:
+            color = 'green'
+            show = True
+
+        context = {'my_list': dicts, 'color': color, 'show': show, 'cid': str(cid)}
+        return render(request, 'getpid_app/provider.html', context)

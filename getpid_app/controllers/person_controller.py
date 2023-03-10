@@ -28,3 +28,14 @@ def hoscode(hoscode):
         results = query(sql)
 
     return results
+
+
+def provider(cid):
+    results = None
+    if cid is not None:
+        sql = "SELECT provider.*,cprovidertype.providertype FROM provider " \
+                "INNER JOIN cprovidertype ON provider.PROVIDERTYPE = cprovidertype.id_providertype " \
+                "WHERE cid = '" + cid + "' ORDER BY D_UPDATE DESC"
+        results = query(sql)
+
+    return results
