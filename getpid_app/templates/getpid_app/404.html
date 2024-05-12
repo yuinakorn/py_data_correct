@@ -9,5 +9,10 @@
             <p>The page you requested could not be found.</p>
         </div>
     </div>
-
+<script>
+    
+    document.getElementById("menu-for-login").remove();
+    document.getElementById("check-login").innerHTML = '<a id="loginout" class="btn btn-success" href="{% url 'login' %}">Login</a>';
+  
+</script>
 {% endblock %}

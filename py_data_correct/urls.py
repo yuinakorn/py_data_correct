@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -22,6 +24,6 @@ urlpatterns = [
     # path('data_correct/', include('getpid_app.urls')),
     path('', include('getpid_app.urls')),
     # path('search/', views.search)
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = 'getpid_app.views.handler404'

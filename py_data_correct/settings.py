@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config['SETTING_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config['MODE']
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', config['WEB_IP'], config['WEB_NAME']]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', config['WEB_LOCAL_IP'], config['WEB_IP'], config['WEB_NAME']]
 
 # CORS_ORIGIN_ALLOW_ALL = True
 
@@ -142,7 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
