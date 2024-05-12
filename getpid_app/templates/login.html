@@ -1,0 +1,42 @@
+{% extends 'getpid_app/components/base.html' %}
+{% block title %}
+  Data Correct | Login
+{% endblock %}
+{% load static %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    
+    <div class="col-md-8 text-center">
+      <img class="mb-4 my-logo" style="height: 140px; width: auto;" src="{% static 'img/LOGO_SSJ_1000-1.png' %}" alt="" >
+      <h1 class="display-5 fw-bold">Data Search</h1>
+        <div class="col-lg-9 mx-auto">
+            <p class="lead mb-4">ระบบการคืนข้อมูล สำหรับจัดทำ data_correct 43 แฟ้ม<br>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-8">
+      <h2>Login</h2>
+      {% if error %}
+        <p style="color: red;">{{ error }}</p>
+      {% endif %}
+      <form method="post" class="form-control pt-3">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input class="input form-control" type="text" id="username" name="username" required />
+        <br />
+        <label for="password">Password:</label>
+        <input class="input form-control" type="password" id="password" name="password" required />
+        <br />
+        <button class="btn btn-success" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    {% if user_info == '0' %}
+    document.getElementById("menu-for-login").remove();
+    document.getElementById("main-for-login").remove();
+    document.getElementById("check-login").innerHTML = '<a id="loginout" class="btn btn-success" href="{% url 'login' %}">Login</a>';
+    {% endif %}
+</script>
+{% endblock %}

@@ -58,7 +58,7 @@
                             <div class="mb-3 col">
                                 <label for="dc_status" class="form-label">discharge_type: </label>
                                 <input type="text" name="dc_status" class="form-control" disabled
-                                       value="{{ item.dc_status }}">
+                                       value="{{ item.DC_STATUS }}">
                             </div>
                             <div class="mb-3 col">
                                 <label for="D_UPDATE" class="form-label">d_update: </label>
@@ -91,6 +91,16 @@
             console.error('Action:', e.action);
             console.error('Trigger:', e.trigger);
         });
+
+
+
+        {% if user_info == '0' %}
+        document.getElementById("menu-for-login").remove();
+        document.getElementById("check-login").innerHTML = '<a id="loginout" class="btn btn-success" href="{% url 'login' %}">Login</a>';
+        {% else %}
+        alertify.success("{{ user_info }}");
+        {% endif %}
+
 
     </script>
 {% endblock %}

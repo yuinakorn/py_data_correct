@@ -5,7 +5,6 @@
     <style>
         li {
             list-style-type: none;
-
         }
     </style>
 
@@ -13,21 +12,24 @@
         <img class="d-block mx-auto mb-4" src="{% static 'img/LOGO_SSJ_1000-1.png' %}" alt="" width="140">
         <h1 class="display-5 fw-bold">Data Search</h1>
         <div class="col-lg-9 mx-auto">
-            <p class="lead mb-4">ระบบการคืนข้อมูล HDC สำหรับจัดทำ data_correct ใน 43 แฟ้ม<br>
+            <p class="lead mb-4">ระบบการคืนข้อมูล สำหรับจัดทำ data_correct 43 แฟ้ม<br>
             </p>
             <h5>วัตถุประสงค์</h5>
             <ul>
                 <li>1.เพื่อให้ผู้ใช้งานสามารถนำข้อมมูลที่ได้จากระบบไปจัดทำ แฟ้ม data_correct ต่อไปได้</li>
                 <li>2.เพื่อให้ผู้ใช้เห็นข้อมูลของกลุ่มเป้าหมาย ที่เป็นการบันทึกจากหน่วยบริการอื่นได้</li>
-                <li>3.เพื่อให้ช่วยให้ข้อมูล hdc ของจังหวัดเชียงใหม่มีความถูกต้องสมบูรณ์</li>
+                <li>3.เพื่อให้ช่วยให้ข้อมูล ของจังหวัดเชียงใหม่มีความถูกต้องสมบูรณ์ขึ้น</li>
             </ul>
-
-
-            {#            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">#}
-            {#                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" style="background-color: #0a7956">ไปที่ NCD</button>#}
-            {#                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>#}
-            {#            </div>#}
         </div>
     </div>
+    <script>
+        {% if user_info == '0' %}
+        alertify.success("ยังไม่ได้ login กรุณา login ก่อน");
+        document.getElementById("menu-for-login").remove();
+        document.getElementById("main-for-login").remove();
+        {% comment %} document.getElementById("menu-for-login").style.display = "none"; {% endcomment %}
+        document.getElementById("check-login").innerHTML = '<a id="loginout" class="btn btn-success" href="{% url 'login' %}">Login</a>';
+        {% endif %}
+    </script>
 
 {% endblock %}

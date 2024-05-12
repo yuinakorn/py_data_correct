@@ -1,43 +1,12 @@
 from py_data_correct import database
-import pymysql
+from django.db import connection
 from dotenv import dotenv_values
 
 config_env = dotenv_values(".env")
 
-# connection = database.connection
-
-
-# not in use.
-def query_ncd(sql):
-    try:
-        connection = database.connection
-        with connection.cursor() as cursor:
-            cursor.execute(sql)
-            rows = cursor.fetchall()
-            result = []
-            # key is column name
-            for row in rows:
-                columns = [column[0] for column in cursor.description]
-                result = dict(zip(columns, row))
-                # print(result)
-
-                return result
-
-            return result
-    except Exception as e:
-        print(e)
-        print("Error: unable to fetch data")
-
 
 def ncd(cid):
-    # global results1, results2, results3, results4, results5
-    connection = pymysql.connect(host=config_env['DB_HOST'],
-                                 user=config_env['DB_USER'],
-                                 password=config_env['DB_PASS'],
-                                 db=config_env['DB_NAME'],
-                                 charset='utf8mb4',
-                                 port=int(config_env["DB_PORT"]),
-                                 )
+
     if cid is not None:
         results1 = None
         results2 = None
@@ -47,16 +16,16 @@ def ncd(cid):
 
         try:
             # connection = database.connection
+
+            # chronic
+            sql = """SELECT chronic.PID,CHRONIC,DATE_DIAG,chronic.HOSPCODE,chospital.hosname FROM chronic 
+                  INNER JOIN person ON chronic.PID = person.PID and chronic.HOSPCODE = person.HOSPCODE 
+                  INNER JOIN chospital on chronic.HOSPCODE = chospital.hoscode 
+                  WHERE person.CID = %s ORDER BY chronic.HOSPCODE, chronic.DATE_DIAG DESC"""
+
             with connection.cursor() as cursor:
-
-                # chronic
-                sql = "SELECT chronic.PID,CHRONIC,DATE_DIAG,chronic.HOSPCODE,chospital.hosname FROM chronic " \
-                      "INNER JOIN person ON chronic.PID = person.PID and chronic.HOSPCODE = person.HOSPCODE " \
-                      "INNER JOIN chospital on chronic.HOSPCODE = chospital.hoscode " \
-                      "WHERE person.CID = '" + cid + "' ORDER BY chronic.HOSPCODE, chronic.DATE_DIAG DESC"
-
                 # results1 = query_ncd(sql)
-                cursor.execute(sql)
+                cursor.execute(sql, cid)
                 rows = cursor.fetchall()
                 results1 = []
                 for row in rows:
@@ -70,14 +39,14 @@ def ncd(cid):
                     results1.append(result)
 
                 # diagnosis_opd ความดัน
-                sql = "SELECT diagnosis_opd.PID,diagnosis_opd.SEQ,diagnosis_opd.DIAGCODE,diagnosis_opd.DATE_SERV,diagnosis_opd.HOSPCODE,chospital.hosname " \
-                      "FROM diagnosis_opd " \
-                      "INNER JOIN person on person.PID = diagnosis_opd.PID AND person.HOSPCODE = diagnosis_opd.HOSPCODE " \
-                      "INNER JOIN chospital on diagnosis_opd.HOSPCODE = chospital.hoscode " \
-                      "WHERE person.CID = '" + cid + "' and diagnosis_opd.DIAGCODE BETWEEN 'I10' and 'I159' " \
-                                                     "ORDER BY diagnosis_opd.HOSPCODE, diagnosis_opd.DATE_SERV DESC"
+                sql = """SELECT diagnosis_opd.PID,diagnosis_opd.SEQ,diagnosis_opd.DIAGCODE,diagnosis_opd.DATE_SERV,diagnosis_opd.HOSPCODE,chospital.hosname 
+                      FROM diagnosis_opd 
+                      INNER JOIN person on person.PID = diagnosis_opd.PID AND person.HOSPCODE = diagnosis_opd.HOSPCODE 
+                      INNER JOIN chospital on diagnosis_opd.HOSPCODE = chospital.hoscode 
+                      WHERE person.CID = %s and diagnosis_opd.DIAGCODE BETWEEN 'I10' and 'I159' 
+                      ORDER BY diagnosis_opd.HOSPCODE, diagnosis_opd.DATE_SERV DESC"""
                 # results2 = query_ncd(sql)
-                cursor.execute(sql)
+                cursor.execute(sql, cid)
                 rows = cursor.fetchall()
                 results2 = []
                 for row in rows:
@@ -92,14 +61,14 @@ def ncd(cid):
                     results2.append(result)
 
                 # diagnosis_ipd ความดัน
-                sql = "SELECT diagnosis_ipd.PID,diagnosis_ipd.AN,diagnosis_ipd.DIAGCODE,diagnosis_ipd.DATETIME_ADMIT, diagnosis_ipd.HOSPCODE,chospital.hosname " \
-                      "FROM diagnosis_ipd " \
-                      "INNER JOIN person on person.PID=diagnosis_ipd.PID AND person.HOSPCODE=diagnosis_ipd.HOSPCODE " \
-                      "INNER JOIN chospital on diagnosis_ipd.HOSPCODE=chospital.hoscode " \
-                      "WHERE person.CID='" + cid + "' AND diagnosis_ipd.DIAGCODE BETWEEN 'I10' AND 'I159' " \
-                                                   "ORDER BY diagnosis_ipd.HOSPCODE"
+                sql = """SELECT diagnosis_ipd.PID,diagnosis_ipd.AN,diagnosis_ipd.DIAGCODE,diagnosis_ipd.DATETIME_ADMIT, diagnosis_ipd.HOSPCODE,chospital.hosname 
+                      FROM diagnosis_ipd 
+                      INNER JOIN person on person.PID=diagnosis_ipd.PID AND person.HOSPCODE=diagnosis_ipd.HOSPCODE 
+                      INNER JOIN chospital on diagnosis_ipd.HOSPCODE=chospital.hoscode 
+                      WHERE person.CID = %s AND diagnosis_ipd.DIAGCODE BETWEEN 'I10' AND 'I159' 
+                      ORDER BY diagnosis_ipd.HOSPCODE"""
                 # results3 = query_ncd(sql)
-                cursor.execute(sql)
+                cursor.execute(sql, cid)
                 rows = cursor.fetchall()
                 results3 = []
                 for row in rows:
@@ -114,15 +83,15 @@ def ncd(cid):
                     results3.append(result)
 
                 # diagnosis_opd เบาหวาน ผู้ป่วยนอก
-                sql = "SELECT diagnosis_opd.PID,diagnosis_opd.SEQ,diagnosis_opd.DIAGCODE,diagnosis_opd.DATE_SERV,diagnosis_opd.HOSPCODE,chospital.hosname " \
-                      "FROM diagnosis_opd " \
-                      "INNER JOIN person on person.PID = diagnosis_opd.PID AND person.HOSPCODE = diagnosis_opd.HOSPCODE " \
-                      "INNER JOIN chospital on diagnosis_opd.HOSPCODE = chospital.hoscode " \
-                      "where person.CID = '" + cid + "' AND diagnosis_opd.DIAGCODE BETWEEN 'E10' AND 'E149' " \
-                                                     "ORDER BY diagnosis_opd.HOSPCODE"
+                sql = """SELECT diagnosis_opd.PID,diagnosis_opd.SEQ,diagnosis_opd.DIAGCODE,diagnosis_opd.DATE_SERV,diagnosis_opd.HOSPCODE,chospital.hosname 
+                      FROM diagnosis_opd 
+                      INNER JOIN person on person.PID = diagnosis_opd.PID AND person.HOSPCODE = diagnosis_opd.HOSPCODE 
+                      INNER JOIN chospital on diagnosis_opd.HOSPCODE = chospital.hoscode 
+                      where person.CID = %s AND diagnosis_opd.DIAGCODE BETWEEN 'E10' AND 'E149' 
+                      ORDER BY diagnosis_opd.HOSPCODE"""
                 # results4 = query_ncd(sql)
 
-                cursor.execute(sql)
+                cursor.execute(sql, cid)
                 rows = cursor.fetchall()
                 results4 = []
                 for row in rows:
@@ -137,15 +106,15 @@ def ncd(cid):
                     results4.append(result)
 
                 # diagnosis_opd เบาหวาน ผู้ป่วยใน
-                sql = "SELECT diagnosis_ipd.PID,diagnosis_ipd.AN,diagnosis_ipd.DIAGCODE,diagnosis_ipd.DATETIME_ADMIT, diagnosis_ipd.HOSPCODE,chospital.hosname " \
-                      "FROM diagnosis_ipd " \
-                      "INNER JOIN person on person.PID = diagnosis_ipd.PID AND person.HOSPCODE = diagnosis_ipd.HOSPCODE " \
-                      "INNER JOIN chospital on diagnosis_ipd.HOSPCODE = chospital.hoscode " \
-                      "WHERE person.CID = '" + cid + "' and diagnosis_ipd.DIAGCODE BETWEEN 'E10' and 'E149' " \
-                                                     "ORDER BY diagnosis_ipd.HOSPCODE"
+                sql = """SELECT diagnosis_ipd.PID,diagnosis_ipd.AN,diagnosis_ipd.DIAGCODE,diagnosis_ipd.DATETIME_ADMIT, diagnosis_ipd.HOSPCODE,chospital.hosname 
+                      FROM diagnosis_ipd 
+                      INNER JOIN person on person.PID = diagnosis_ipd.PID AND person.HOSPCODE = diagnosis_ipd.HOSPCODE 
+                      INNER JOIN chospital on diagnosis_ipd.HOSPCODE = chospital.hoscode 
+                      WHERE person.CID = %s and diagnosis_ipd.DIAGCODE BETWEEN 'E10' and 'E149' 
+                      ORDER BY diagnosis_ipd.HOSPCODE"""
 
                 # results5 = query_ncd(sql)
-                cursor.execute(sql)
+                cursor.execute(sql, cid)
                 rows = cursor.fetchall()
                 results5 = []
                 for row in rows:

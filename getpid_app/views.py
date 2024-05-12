@@ -1,6 +1,15 @@
-from django.shortcuts import render
-from .controllers import ncd_controller, person_controller, labor_controller, palliative_controller
+from django.shortcuts import render, redirect
+from .controllers import ncd_controller, labor_controller, palliative_controller, person_controller
+from django.contrib.auth import authenticate, login
 import json
+from django.db import connection
+
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponseRedirect
+
+# from .decorators import custom_login_required
 
 
 def handler404(request, exception):
@@ -10,7 +19,70 @@ def handler404(request, exception):
 # Index
 def index(request):
     title = 'Data Correct'
-    return render(request, 'getpid_app/index.html', {'title': title})
+    user_info = request.session.get('user_info', '0')
+    return render(request, 'getpid_app/index.html', {'title': title, 'user_info': user_info})
+
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if username and password:
+
+            sql = """SELECT id, username, firstname, lastname, officename as hoscode  FROM sys_member 
+            WHERE username = %s AND password = md5(%s)"""
+
+            with connection.cursor() as cursor:
+                cursor.execute(sql, (username, password))
+                user = cursor.fetchone()
+                if user:
+                    # Creating session for the user
+                    request.session['user_info'] = {
+                        'username': user[1],
+                        'firstname': user[2],
+                        'lastname': user[3],
+                        'hoscode': user[4]
+                    }
+                    return redirect('home')
+                else:
+                    return render(request, 'login.html', {'error': 'Invalid username or password'})
+    user_info = request.session.get('user_info', '0')
+    return render(request, 'login.html', {'user_info': user_info})
+
+
+def custom_login_required(function):
+    def wrap(request, *args, **kwargs):
+        if 'username' in request.session:
+            return function(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect('/login')  # Redirect to the index page if not logged in
+    wrap.__doc__ = function.__doc__
+    wrap.__name__ = function.__name__
+    return wrap
+
+
+@custom_login_required
+def my_protected_view(request):
+    # Your protected view logic here
+    return render(request, 'protected.html')
+
+
+def logout_view(request):
+    # Clear all session data
+    request.session.flush()
+    return redirect('login')
+
+
+def home(request):
+    # print session data
+    # print(request.session.get('username'))
+    session_user = request.session.get('user_info')
+    username = session_user['username']
+    hoscode = session_user['hoscode']
+    fullname = session_user['firstname'] + ' ' + session_user['lastname']
+    user_info = request.session.get('user_info') if request.session.get('user_info') else None
+    return render(request, 'getpid_app/home.html', {'username': username, 'fullname': fullname, 'hoscode': hoscode, 'user_info': user_info})
 
 
 # NCD
@@ -148,7 +220,6 @@ def palliative(request):
     return render(request, 'getpid_app/palliative.html', context)
 
 
-
 def person(request):
     global color
     if 'cid' not in request.POST:
@@ -159,8 +230,14 @@ def person(request):
         cid = request.POST.get('cid', None)
 
         for row in rows:
-            row['D_UPDATE'] = str(row['D_UPDATE']) if row['D_UPDATE'] is not None else None
-            dicts.append(row)
+            processed_row = {
+                'HOSPCODE': row[0],
+                'PID': row[1],
+                'TYPEAREA': row[2],
+                'DC_STATUS': row[3],
+                'D_UPDATE': str(row[4]) if row[4] is not None else None
+            }
+            dicts.append(processed_row)
 
         if len(dicts) == 0:
             color = 'red'
@@ -181,10 +258,16 @@ def hoscode(request):
         dicts = []
 
         for row in rows:
-            row['status'] = 'เปิดใช้งาน' if row['status'] == 1 else 'ปิดใช้งาน'
-            row['hdc_regist'] = 'เปิดใช้งาน' if row['hdc_regist'] == 1 else 'ปิดใช้งาน'
-            row['hosname'] = row['hosname'].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.')
-            dicts.append(row)
+            processed_row = {
+                'hoscode': row[0],
+                'hosname': row[1].replace('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'รพ.สต.'),
+                'hdc_regist': 'เปิดใช้งาน' if row[2] == 1 else 'ปิดใช้งาน',
+                'status': 'เปิดใช้งาน' if row[3] == 1 else 'ปิดใช้งาน',
+                'hostypename': row[4],
+                'ampurname': row[5],
+                'tambonname': row[6]
+            }
+            dicts.append(processed_row)
 
         if len(dicts) == 0:
             color = 'red'
