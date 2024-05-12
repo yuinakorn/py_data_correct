@@ -10,7 +10,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 # from .decorators import custom_login_required
+from dotenv import dotenv_values
 
+config = dotenv_values(".env")
 
 def handler404(request, exception):
     return render(request, 'getpid_app/404.html')
@@ -31,7 +33,7 @@ def login_view(request):
         if username and password:
 
             sql = """SELECT id, username, firstname, lastname, officename as hoscode  FROM sys_member 
-            WHERE username = %s AND password = md5(%s)"""
+            WHERE username = %s AND password = md5(%s) AND status = 'yes' LIMIT 1 """
 
             with connection.cursor() as cursor:
                 cursor.execute(sql, (username, password))
@@ -48,6 +50,7 @@ def login_view(request):
                 else:
                     return render(request, 'login.html', {'error': 'Invalid username or password'})
     user_info = request.session.get('user_info', '0')
+
     return render(request, 'login.html', {'user_info': user_info})
 
 

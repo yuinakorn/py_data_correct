@@ -22,24 +22,23 @@ class LoginRequiredMiddleware:
         response = self.get_response(request)
         return response
 
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        exempt_urls = [
-            '/',
-            '/login/',
-            '/static/',
-            '/person/',
-            '/hoscode/',
-            '/provider/',
-            '/home/',
-            '/ncd/',
-            '/labor/',
-            '/palliative/',
-        ]
+    # def process_view(self, request, view_func, view_args, view_kwargs):
+    #     exempt_urls = [
+    #         '/',
+    #         '/login/',
+    #         '/person/',
+    #         '/hoscode/',
+    #         '/provider/',
+    #         '/home/',
+    #         '/ncd/',
+    #         '/labor/',
+    #         '/palliative/',
+    #     ]
 
-        if not any(request.path.startswith(path) for path in exempt_urls):
-            if not request.session.get('user_info') or request.session.get('user_info').length == 0:
-                return redirect('/login/')  # Redirect ไปที่หน้า login ถ้าไม่พบ session
-            else:
-                return redirect('/home/')
+    #     if not any(request.path.startswith(path) for path in exempt_urls):
+    #         if not request.session.get('user_info') or request.session.get('user_info').length == 0:
+    #             return redirect('/login/')  # Redirect ไปที่หน้า login ถ้าไม่พบ session
+    #         else:
+    #             return redirect('/home/')
 
-        return None
+    #     return None

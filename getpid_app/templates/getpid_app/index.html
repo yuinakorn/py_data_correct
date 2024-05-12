@@ -9,7 +9,7 @@
     </style>
 
     <div class="px-4 py-5 my-1 text-center">
-        <img class="d-block mx-auto mb-4" src="{% static 'img/LOGO_SSJ_1000-1.png' %}" alt="" width="140">
+        <img class="d-block mx-auto mb-4" src="https://chiangmaihealth.go.th/images/yui/LOGO_SSJ_1000-1.png" alt="" width="140">
         <h1 class="display-5 fw-bold">Data Search</h1>
         <div class="col-lg-9 mx-auto">
             <p class="lead mb-4">ระบบการคืนข้อมูล สำหรับจัดทำ data_correct 43 แฟ้ม<br>
@@ -23,8 +23,7 @@
         </div>
     </div>
     <script>
-        {% if user_info == '0' %}
-        alertify.success("ยังไม่ได้ login กรุณา login ก่อน");
+        {% if user_info == '0' or not user %}
         document.getElementById("menu-for-login").remove();
         document.getElementById("main-for-login").remove();
         {% comment %} document.getElementById("menu-for-login").style.display = "none"; {% endcomment %}
