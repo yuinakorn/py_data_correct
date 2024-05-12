@@ -97,8 +97,6 @@
         {% if user_info == '0' %}
         document.getElementById("menu-for-login").remove();
         document.getElementById("check-login").innerHTML = '<a id="loginout" class="btn btn-success" href="{% url 'login' %}">Login</a>';
-        {% else %}
-        alertify.success("{{ user_info }}");
         {% endif %}
 
 
