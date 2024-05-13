@@ -48,7 +48,8 @@ def login_view(request):
                     }
                     return redirect('home')
                 else:
-                    return render(request, 'login.html', {'error': 'Invalid username or password'})
+                    user_info = '0'
+                    return render(request, 'login.html', {'error': 'Invalid username or password', 'user_info': user_info})
     user_info = request.session.get('user_info', '0')
 
     return render(request, 'login.html', {'user_info': user_info})
